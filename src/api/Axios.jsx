@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "sonner";
 
 const api = axios.create({
-  baseURL: "https://futegen-backend.onrender.com" + "/api",
+  baseURL: import.meta.env.VITE_REACT_APP_API_URL + "/api",
   withCredentials: true
 });
 
