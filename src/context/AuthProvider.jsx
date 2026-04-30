@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
   const checkAuthStatus = async () => {
     try {
       const res = await api.get("/users/getUser");
-      console.log("userDetails in thge get useer:",res.data.user)
+      
       setUser(res.data.user);
       setIsAuthenticated(true);
     } catch (error) {
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   };
-  console.log("local state user:",user)
+ 
 
   const clearError = () => setError('');
 
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       const message = err.response?.data?.message || "Login failed";
 
-      // 🔴 show blocked message on login page itself, don't let interceptor redirect
+      
       if (err.response?.status === 403) {
         setError("Your account has been blocked by admin");
         return { success: false };
