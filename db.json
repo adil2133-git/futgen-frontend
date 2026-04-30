@@ -1,0 +1,451 @@
+{
+  "users": [
+    {
+      "id": "e4f2",
+      "Fname": "Adil",
+      "Lname": "Aadhy",
+      "email": "adil123@gmail.com",
+      "password": "@Aad1l9895",
+      "cpassword": "@Aad1l9895",
+      "role": "user"
+    },
+    {
+      "id": "8480",
+      "Fname": "aadhy",
+      "Lname": "adil",
+      "email": "adil11@gamil.com",
+      "password": "@Adil2134",
+      "cpassword": "@Adil2134",
+      "role": "user",
+      "blocked": false
+    },
+    {
+      "id": "f349",
+      "Fname": "Mohd",
+      "Lname": "Ayad",
+      "email": "ayad12@gamil.com",
+      "password": "@Ayad1234",
+      "cpassword": "@Ayad1234",
+      "role": "user",
+      "blocked": false
+    },
+    {
+      "id": "a16b",
+      "Fname": "adil",
+      "Lname": "adil",
+      "email": "adil111@gmail.com",
+      "password": "12341234",
+      "cpassword": "12341234",
+      "role": "user"
+    },
+    {
+      "id": "1763790369716",
+      "firstName": "adil",
+      "lastName": "",
+      "email": "adil098@gamil.com",
+      "password": "111232",
+      "role": "user"
+    },
+    {
+      "id": "1763879504593",
+      "firstName": "abdul",
+      "lastName": "rahman",
+      "email": "abdul12@gmail.com",
+      "password": "121212",
+      "role": "user",
+      "blocked": true
+    },
+    {
+      "id": "1764078398952",
+      "firstName": "abdul",
+      "lastName": "aabdul",
+      "email": "abdul111@gmail.com",
+      "password": "asdfgh",
+      "role": "user",
+      "blocked": false
+    },
+    {
+      "id": "admin1",
+      "firstName": "Admin",
+      "lastName": "User",
+      "email": "admin@futgen.com",
+      "password": "admin123",
+      "role": "admin"
+    }
+  ],
+  "products": [
+    
+
+    
+    {
+      "id": "1764755199216",
+      "name": "tshirt",
+      "price": "Rs. 2,999.00",
+      "category": "tshirts",
+      "image": "src/assets/pic1.webp"
+    }
+  ],
+  "carts": [
+    {
+      "id": "cart_admin1",
+      "userId": "admin1",
+      "items": [
+        {
+          "productId": "6855",
+          "size": "M",
+          "quantity": 1,
+          "addedAt": "2025-11-26T09:49:36.739Z"
+        },
+        {
+          "productId": "60ab",
+          "size": "L",
+          "quantity": 2,
+          "addedAt": "2025-11-26T09:49:36.739Z"
+        },
+        {
+          "productId": "60ab",
+          "size": "M",
+          "quantity": 1,
+          "addedAt": "2025-11-26T09:49:36.739Z"
+        }
+      ],
+      "createdAt": "2024-12-25T10:30:00.000Z",
+      "updatedAt": "2025-11-26T09:49:36.764Z"
+    },
+    {
+      "id": "eeac",
+      "userId": 1763879504593,
+      "items": [],
+      "createdAt": "2025-11-26T05:23:50.494Z",
+      "updatedAt": "2025-11-26T13:54:07.810Z"
+    },
+    {
+      "id": "a387",
+      "userId": 1763879504593,
+      "items": [
+        {
+          "productId": "60ab",
+          "size": "M",
+          "quantity": 1,
+          "addedAt": "2025-11-26T05:23:50.442Z"
+        }
+      ],
+      "createdAt": "2025-11-26T05:23:50.496Z",
+      "updatedAt": "2025-11-26T05:23:50.496Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "1764164526676",
+      "orderNumber": "FUT-1764164526676",
+      "userId": 1763879504593,
+      "customerName": "adil AADHYY",
+      "customerEmail": "adilaadi340@gmail.com",
+      "items": [
+        {
+          "productId": "sweat3",
+          "name": "Blaugrana Vintage Sweatshirt",
+          "price": "Rs. 2,499.00",
+          "size": "M",
+          "quantity": 1,
+          "image": "src/assets/sweat3.webp"
+        }
+      ],
+      "shippingAddress": {
+        "firstName": "adil",
+        "lastName": "AADHYY",
+        "email": "adilaadi340@gmail.com",
+        "phone": "07994931322",
+        "address": "sonkal",
+        "city": "uppala",
+        "state": "kerala",
+        "zipCode": "671322"
+      },
+      "total": "Rs. 2,499",
+      "status": "shipped",
+      "paymentMethod": "upi",
+      "paymentStatus": "paid",
+      "upiId": "adilaboobacker2005@okaxis",
+      "createdAt": "2025-11-26T13:42:06.677Z",
+      "updatedAt": "2025-11-28T10:03:39.663Z"
+    },
+    {
+      "id": "1764165245501",
+      "orderNumber": "FUT-1764165245501",
+      "userId": 1763879504593,
+      "customerName": "Abdul Adil",
+      "customerEmail": "adil123@gmail.com",
+      "items": [
+        {
+          "productId": "6855",
+          "name": "Madrid Varsity T-shirt",
+          "price": "Rs. 1,999.00",
+          "size": "M",
+          "quantity": 1,
+          "image": "src/assets/pic1.webp"
+        }
+      ],
+      "shippingAddress": {
+        "firstName": "Abdul",
+        "lastName": "Adil",
+        "email": "adil123@gmail.com",
+        "phone": "07994931322",
+        "address": "sonkal",
+        "city": "uppala",
+        "state": "kerala",
+        "zipCode": "671322"
+      },
+      "total": "Rs. 1,999",
+      "status": "delivered",
+      "paymentMethod": "upi",
+      "paymentStatus": "paid",
+      "upiId": "adilabjkhlbacker2005@okaxis",
+      "createdAt": "2025-11-26T13:54:05.502Z",
+      "updatedAt": "2025-12-06T07:15:57.873Z"
+    },
+    {
+      "id": "1764168837604",
+      "orderNumber": "FUT-1764168837604",
+      "userId": 1763879504593,
+      "customerName": "abdul abdul",
+      "customerEmail": "34192098@1309ir",
+      "items": [
+        {
+          "productId": "60ab",
+          "name": "Catalan Vintage",
+          "price": "Rs. 1,799.00",
+          "size": "M",
+          "quantity": 1,
+          "image": "src/assets/pic2.webp"
+        },
+        {
+          "productId": "6855",
+          "name": "Madrid Varsity T-shirt",
+          "price": "Rs. 1,999.00",
+          "size": "M",
+          "quantity": 1,
+          "image": "src/assets/pic1.webp"
+        },
+        {
+          "productId": "jac3",
+          "name": "Argentina Pure Leather Jacket",
+          "price": "Rs. 12,999.00",
+          "size": "M",
+          "quantity": 1,
+          "image": "src/assets/jacket3.webp"
+        },
+        {
+          "productId": "sweat3",
+          "name": "Blaugrana Vintage Sweatshirt",
+          "price": "Rs. 2,499.00",
+          "size": "XL",
+          "quantity": 1,
+          "image": "src/assets/sweat3.webp"
+        }
+      ],
+      "shippingAddress": {
+        "firstName": "abdul",
+        "lastName": "abdul",
+        "email": "34192098@1309ir",
+        "phone": "138973247913",
+        "address": "341rklejfsoklamd.x",
+        "city": "dsfasdfasddfddf",
+        "state": "dfaddfadsf",
+        "zipCode": "312123"
+      },
+      "total": "Rs. 19,296",
+      "status": "delivered",
+      "paymentMethod": "upi",
+      "paymentStatus": "paid",
+      "upiId": "adfsgardgatsdfgadffffff@oksfnc",
+      "createdAt": "2025-11-26T14:53:57.604Z",
+      "updatedAt": "2025-12-02T11:13:52.849Z"
+    },
+    {
+      "id": "1764672601046",
+      "orderNumber": "FUT-1764672601046",
+      "userId": "1763879504593",
+      "customerName": "adil AADHYY",
+      "customerEmail": "adilaadi340@gmail.com",
+      "items": [
+        {
+          "productId": "60ab",
+          "name": "Catalan Vintage",
+          "price": "Rs. 1,799.00",
+          "size": "M",
+          "quantity": 1,
+          "image": "src/assets/pic2.webp"
+        }
+      ],
+      "shippingAddress": {
+        "firstName": "adil",
+        "lastName": "AADHYY",
+        "email": "adilaadi340@gmail.com",
+        "phone": "07994931322",
+        "address": "sonkal",
+        "city": "uppala",
+        "state": "kerala",
+        "zipCode": "671322"
+      },
+      "total": "Rs. 1,799",
+      "status": "cancelled",
+      "paymentMethod": "upi",
+      "paymentStatus": "paid",
+      "upiId": "adilaboobacker2005@okaxis",
+      "createdAt": "2025-12-02T10:50:01.046Z",
+      "updatedAt": "2025-12-04T13:20:14.094Z"
+    },
+    {
+      "id": "1764674177448",
+      "orderNumber": "FUT-1764674177448",
+      "userId": "admin1",
+      "customerName": "rifana sherin",
+      "customerEmail": "rifanasherin80@gmail.com",
+      "items": [
+        {
+          "productId": "sweat1",
+          "name": "The Red Devils Collared Sweatshirt",
+          "price": "Rs. 1,999.00",
+          "size": "M",
+          "quantity": 2,
+          "image": "src/assets/sweat1.webp"
+        }
+      ],
+      "shippingAddress": {
+        "firstName": "rifana",
+        "lastName": "sherin",
+        "email": "rifanasherin80@gmail.com",
+        "phone": "1234567890",
+        "address": "mechery",
+        "city": "palakkad",
+        "state": "kerala",
+        "zipCode": "679308"
+      },
+      "total": "Rs. 3,998",
+      "status": "pending",
+      "paymentMethod": "upi",
+      "paymentStatus": "paid",
+      "upiId": "rahoof123@okaxis",
+      "createdAt": "2025-12-02T11:16:17.449Z",
+      "updatedAt": "2025-12-02T11:16:17.449Z"
+    },
+    {
+      "id": "1764743763749",
+      "orderNumber": "FUT-1764743763749",
+      "userId": "8480",
+      "customerName": "adil AADHYY",
+      "customerEmail": "adilaadi340@gmail.com",
+      "items": [
+        {
+          "productId": "sweat1",
+          "name": "The Red Devils Collared Sweatshirt",
+          "price": "Rs. 1,999.00",
+          "size": "M",
+          "quantity": 1,
+          "image": "src/assets/sweat1.webp"
+        }
+      ],
+      "shippingAddress": {
+        "firstName": "adil",
+        "lastName": "AADHYY",
+        "email": "adilaadi340@gmail.com",
+        "phone": "07994931322",
+        "address": "sonkal",
+        "city": "uppala",
+        "state": "kerala",
+        "zipCode": "671322"
+      },
+      "total": "Rs. 1,999",
+      "status": "delivered",
+      "paymentMethod": "upi",
+      "paymentStatus": "paid",
+      "upiId": "adilaboobacker2005@okaxis",
+      "createdAt": "2025-12-03T06:36:03.749Z",
+      "updatedAt": "2025-12-06T07:15:53.533Z"
+    },
+    {
+      "id": "1765204450717",
+      "orderNumber": "FUT-1765204450717",
+      "userId": "admin1",
+      "customerName": "adil AADHYY",
+      "customerEmail": "adilaadi340@gmail.com",
+      "items": [
+        {
+          "productId": "d7a2",
+          "name": "England Vintage",
+          "price": "Rs. 1,799.00",
+          "size": "M",
+          "quantity": 1,
+          "image": "src/assets/pic4.webp"
+        },
+        {
+          "productId": "jac3",
+          "name": "Argentina Pure Leather Jacket",
+          "price": "Rs. 12,99.00",
+          "size": "M",
+          "quantity": 1,
+          "image": "src/assets/jacket3.webp"
+        }
+      ],
+      "shippingAddress": {
+        "firstName": "adil",
+        "lastName": "AADHYY",
+        "email": "adilaadi340@gmail.com",
+        "phone": "07994931322",
+        "address": "sonkal",
+        "city": "uppala",
+        "state": "kerala",
+        "zipCode": "671322"
+      },
+      "total": "Rs. 3,098",
+      "status": "confirmed",
+      "paymentMethod": "upi",
+      "paymentStatus": "paid",
+      "upiId": "adilaboobacker2005@okaxis",
+      "createdAt": "2025-12-08T14:34:10.717Z",
+      "updatedAt": "2025-12-17T11:11:59.789Z"
+    },
+    {
+      "id": "1765204672526",
+      "orderNumber": "FUT-1765204672526",
+      "userId": "8480",
+      "customerName": "adil AADHYY",
+      "customerEmail": "adilaadi340@gmail.com",
+      "items": [
+        {
+          "productId": "645b",
+          "name": "Cold Palmer",
+          "price": "Rs. 1,499.00",
+          "size": "M",
+          "quantity": 1,
+          "image": "src/assets/pic5.webp"
+        },
+        {
+          "productId": "sweat4",
+          "name": "Rooney 8-Bit Sweatshirt",
+          "price": "Rs. 2,199.00",
+          "size": "M",
+          "quantity": 4,
+          "image": "src/assets/sweat4.webp"
+        }
+      ],
+      "shippingAddress": {
+        "firstName": "adil",
+        "lastName": "AADHYY",
+        "email": "adilaadi340@gmail.com",
+        "phone": "07994931322",
+        "address": "sonkal",
+        "city": "uppala",
+        "state": "kerala",
+        "zipCode": "671322"
+      },
+      "total": "Rs. 10,295",
+      "status": "shipped",
+      "paymentMethod": "upi",
+      "paymentStatus": "paid",
+      "upiId": "adilaboobacker2005@okaxis",
+      "createdAt": "2025-12-08T14:37:52.526Z",
+      "updatedAt": "2026-02-11T09:46:56.560Z"
+    }
+  ]
+}
