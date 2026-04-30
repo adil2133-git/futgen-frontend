@@ -21,7 +21,6 @@ api.interceptors.response.use(
         isRedirecting = true;
         toast.error("Your account has been blocked by admin");
         setTimeout(() => {
-          isRedirecting = false;
           window.location.href = "/login";
         }, 1000);
       }
@@ -39,10 +38,6 @@ api.interceptors.response.use(
         await api.post("/users/refresh");
         return api(originalRequest);
       } catch (refreshError) {
-        if (!isRedirecting) {
-          isRedirecting = true;
-          window.location.href = "/login";
-        }
         return Promise.reject(refreshError);
       }
     }
