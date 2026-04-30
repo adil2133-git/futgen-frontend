@@ -14,7 +14,7 @@ api.interceptors.response.use(
     const originalRequest = error.config;
     const currentPath = window.location.pathname;
 
-    const publicRoutes = ["/login", "/signup"];
+    const publicRoutes = ["/login", "/signup", "/"];
 
     if (
       error.response?.status === 403 &&
