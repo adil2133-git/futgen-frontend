@@ -28,6 +28,7 @@ export default function Navbar({ logoSrc = "/logo.png" }) {
   const [profileOpen, setProfileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
@@ -71,15 +72,24 @@ export default function Navbar({ logoSrc = "/logo.png" }) {
     navigate('/');
   };
 
-  const handleSearch = (e) => {
-    if (e) e.preventDefault();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 500);
 
-    if (searchQuery.trim()) {
-      navigate(`/product?search=${encodeURIComponent(searchQuery)}`);
-      setSearchOpen(false);
-      setSearchQuery('');
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    const trimmedSearch = debouncedSearch.trim();
+
+    if (!searchOpen) return;
+
+    if (trimmedSearch) {
+      navigate(`/product?search=${encodeURIComponent(trimmedSearch)}`);
     }
-  };
+
+  }, [debouncedSearch, searchOpen]);
 
   // Check if user has admin role
   const isAdmin = user?.role === 'admin' || user?.role === 'Admin' || user?.role === 'ADMIN';
@@ -133,27 +143,27 @@ export default function Navbar({ logoSrc = "/logo.png" }) {
 
                 {searchOpen && (
                   <div className="absolute top-full right-0 mt-2 w-72 sm:w-80 bg-white rounded-lg shadow-xl border border-gray-200 p-4 z-[100]"
-                  onMouseDown={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
                   >
-                    <form onSubmit={handleSearch}>
+                    <div>
                       <div className="flex gap-2">
                         <input
                           type="text"
                           value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            setSearchQuery(value);
+
+                            if (value.trim() === "") {
+                              navigate("/product");
+                            }
+                          }}
                           placeholder="Search products..."
                           className="flex-1 px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
                           autoFocus
                         />
-                        <button
-                          type="button"
-                          onClick={handleSearch}
-                          className="bg-red-600 text-white px-3 py-2 text-sm rounded-lg hover:bg-red-700 transition-colors"
-                        >
-                          Search
-                        </button>
                       </div>
-                    </form>
+                    </div>
                   </div>
                 )}
               </div>
@@ -173,26 +183,27 @@ export default function Navbar({ logoSrc = "/logo.png" }) {
 
                 {searchOpen && (
                   <div className="absolute top-full right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 p-3 z-[100]"
-                  onMouseDown={(e) => e.stopPropagation()}
+                    onMouseDown={(e) => e.stopPropagation()}
                   >
-                    <form onSubmit={handleSearch}>
+                    <div>
                       <div className="flex gap-2">
                         <input
                           type="text"
                           value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            setSearchQuery(value);
+
+                            if (value.trim() === "") {
+                              navigate("/product");
+                            }
+                          }}
                           placeholder="Search products..."
                           className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
                           autoFocus
                         />
-                        <button
-                          type="submit"
-                          className="bg-red-600 text-white px-3 py-2 text-sm rounded-lg hover:bg-red-700 transition-colors"
-                        >
-                          Go
-                        </button>
                       </div>
-                    </form>
+                    </div>
                   </div>
                 )}
               </div>
