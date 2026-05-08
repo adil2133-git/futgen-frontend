@@ -8,7 +8,7 @@ const Pagination = ({
   itemsCount = 0,
   showResultsInfo = true 
 }) => {
-  // Don't render if loading, no items, or only one page
+
   if (loading || itemsCount === 0 || !pagination || pagination.totalPages <= 1) {
     return null;
   }
@@ -22,11 +22,11 @@ const Pagination = ({
     }
   };
 
-  // Calculate showing range
+
   const startItem = (page - 1) * limit + 1;
   const endItem = Math.min(page * limit, total);
 
-  // Generate page numbers to display
+
   const getPageNumbers = () => {
     const maxVisible = 5;
     let startPage = Math.max(1, page - Math.floor(maxVisible / 2));

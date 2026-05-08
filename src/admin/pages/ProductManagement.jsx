@@ -3,12 +3,13 @@ import api from '../../api/Axios';
 import Dashboard from '../components/Dashboard';
 import usePagination from '../hooks/usePagination';
 import { toast } from 'sonner';
-import Pagination from "../components/pagination"; 
+import Pagination from "../components/pagination";
 
 function ProductManagement() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('name');
   const [loading, setLoading] = useState(false);
@@ -34,14 +35,26 @@ function ProductManagement() {
     { value: 'joggers', label: 'Joggers' }
   ];
 
+
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+
+  useEffect(() => {
+    setPage(1);
+    
     setParams({
-      search: searchTerm,
+      search: debouncedSearch,
       category: selectedCategory,
       sortBy: sortBy
     });
-    setPage(1);
-  }, [searchTerm, selectedCategory, sortBy]);
+
+  }, [debouncedSearch, selectedCategory, sortBy]);
 
 
   const resetForm = () => {
@@ -347,21 +360,21 @@ function ProductManagement() {
                               />
                               <div className="ml-4 text-sm font-medium text-gray-900">{product.name}</div>
                             </div>
-                           </td>
+                          </td>
 
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {product.price}
-                           </td>
+                          </td>
 
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 capitalize">
                               {product.category}
                             </span>
-                           </td>
+                          </td>
 
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {product.stock || 0}
-                           </td>
+                          </td>
 
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span className={`px-2 py-1 rounded text-xs ${product.isActive
@@ -370,7 +383,7 @@ function ProductManagement() {
                               }`}>
                               {product.isActive ? "Active" : "Inactive"}
                             </span>
-                           </td>
+                          </td>
 
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <button
@@ -393,8 +406,8 @@ function ProductManagement() {
                             >
                               Delete
                             </button>
-                           </td>
-                         </tr>
+                          </td>
+                        </tr>
 
                         {editingProduct?.id === product.id && (
                           <tr>
@@ -672,9 +685,9 @@ function ProductManagement() {
               </div>
             </>
           )}
-          
+
           {/* Simplified Pagination UI using reusable component */}
-          <Pagination 
+          <Pagination
             pagination={pagination}
             currentPage={page}
             onPageChange={setPage}

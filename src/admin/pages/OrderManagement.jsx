@@ -7,6 +7,7 @@ import Pagination from "../components/pagination"
 
 function OrderManagement() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [sortBy, setSortBy] = useState('newest');
 
@@ -17,7 +18,7 @@ function OrderManagement() {
     setPage,
     pagination,
     setParams,
-    refetch  // Add refetch here
+    refetch  
   } = usePagination("/admin/order");
 
   const statusOptions = [
@@ -46,13 +47,23 @@ function OrderManagement() {
   };
 
   useEffect(() => {
-    setParams({
-      search: searchTerm,
-      status: selectedStatus,
-      sort: sortBy
-    });
-    setPage(1);
-  }, [searchTerm, selectedStatus, sortBy]);
+  const timer = setTimeout(() => {
+    setDebouncedSearch(searchTerm);
+  }, 500);
+
+  return () => clearTimeout(timer);
+}, [searchTerm]);
+
+  useEffect(() => {
+  setPage(1);
+
+  setParams({
+    search: debouncedSearch,
+    status: selectedStatus,
+    sort: sortBy
+  });
+
+}, [debouncedSearch, selectedStatus, sortBy]);
 
   const statusCounts = useMemo(() => {
     return {

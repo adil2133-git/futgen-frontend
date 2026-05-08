@@ -6,8 +6,9 @@ import { toast } from 'sonner';
 import Pagination from "../components/pagination" 
 
 function UserManagement() {
-  const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [sortBy, setSortBy] = useState('name');
 
   const {
@@ -27,14 +28,23 @@ function UserManagement() {
   ];
 
   useEffect(() => {
-    setParams({
-      search: searchTerm,
-      status: selectedStatus,
-      sort: sortBy
-    });
+  const timer = setTimeout(() => {
+    setDebouncedSearch(searchTerm);
+  }, 500);
 
-    setPage(1);
-  }, [searchTerm, selectedStatus, sortBy]);
+  return () => clearTimeout(timer);
+}, [searchTerm]);
+
+  useEffect(() => {
+  setPage(1);
+
+  setParams({
+    search: debouncedSearch,
+    status: selectedStatus,
+    sort: sortBy
+  });
+
+}, [debouncedSearch, selectedStatus, sortBy]);
 
   const handleBlockUser = async (userId, currentStatus) => {
     if (currentStatus) {
