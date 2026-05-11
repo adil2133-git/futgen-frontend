@@ -1,35 +1,36 @@
-import { useState } from 'react'
+import { Suspense, lazy } from 'react'
 import './App.css'
 import Registration from './authentication/Registration'
 import Login from './authentication/Login'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Home from './pages/Home'
 import { AuthProvider } from './context/AuthProvider'
-import AllProduct from './pages/AllProduct'
-import DetailCard from './pages/DetailCard'
-import Cart from './pages/Cart'
 import { CartProvider } from './context/CartProvider'
-import Checkout from './pages/Checkout'
-import Categories from './pages/Categories'
-import AboutUs from './pages/AboutUs'
-import ContactUs from './pages/ContactUs'
-import OrderManagement from './admin/pages/OrderManagement'
-import ProductManagement from './admin/pages/ProductManagement'
-import UserManagement from './admin/pages/UserManagement'
-import AdminHome from './admin/pages/AdminHome'
-import YourOrders from './pages/YourOrders'
 import { WishlistProvider } from './context/WishlistProvider'
-import Wishlist from './pages/Wishlist'
 import AdminRoute from './components/AdminRoute'
-import OtpVerify from './pages/OtpVerify'
+
+const Home = lazy(() => import('./pages/Home'))
+const AllProduct = lazy(() => import('./pages/AllProduct'))
+const DetailCard = lazy(() => import('./pages/DetailCard'))
+const Cart = lazy(() => import('./pages/Cart'))
+const Checkout = lazy(() => import('./pages/Checkout'))
+const Categories = lazy(() => import('./pages/Categories'))
+const AboutUs = lazy(() => import('./pages/AboutUs'))
+const ContactUs = lazy(() => import('./pages/ContactUs'))
+const OrderManagement = lazy(() => import('./admin/pages/OrderManagement'))
+const ProductManagement = lazy(() => import('./admin/pages/ProductManagement'))
+const UserManagement = lazy(() => import('./admin/pages/UserManagement'))
+const AdminHome = lazy(() => import('./admin/pages/AdminHome'))
+const YourOrders = lazy(() => import('./pages/YourOrders'))
+const Wishlist = lazy(() => import('./pages/Wishlist'))
+const OtpVerify = lazy(() => import('./pages/OtpVerify'))
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <AuthProvider>
-          <CartProvider>
-            <WishlistProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <CartProvider>
+          <WishlistProvider>
+            <Suspense fallback={<div>Loading...</div>}>
               <Routes>
                 <Route path='/verify-otp' element={<OtpVerify />} />
                 <Route path='/signup' element={<Registration />} />
@@ -53,11 +54,11 @@ function App() {
                   <Route path='/admin/user' element={<UserManagement />} />
                 </Route>
               </Routes>
-            </WishlistProvider>
-          </CartProvider>
-        </AuthProvider>
-      </BrowserRouter>
-    </>
+            </Suspense>
+          </WishlistProvider>
+        </CartProvider>
+      </AuthProvider>
+    </BrowserRouter>
   )
 }
 
