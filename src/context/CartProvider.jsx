@@ -1,98 +1,59 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from './AuthProvider';
-import api from '../api/Axios';
+import {
+  fetchCart as fetchCartThunk,
+  addToCart as addToCartThunk,
+  increaseQuantity as increaseQuantityThunk,
+  decreaseQuantity as decreaseQuantityThunk,
+  removeFromCart as removeFromCartThunk,
+  clearCart as clearCartThunk,
+  clearCartLocal,
+  parsePrice
+} from '../store/slices/cartSlice';
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
-  const { user, isAuthenticated } = useAuth();
-
-  const fetchCart = async () => {
-    try {
-      const res = await api.get("/cart")
-
-      const products = res.data.data?.products || []
-      
-      setCart(products)
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart.cart);
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated) {
-      fetchCart()
+      dispatch(fetchCartThunk());
     } else {
-      setCart([]);
+      dispatch(clearCartLocal());
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, dispatch]);
 
-
-
-  const parsePrice = (priceString) => {
-    if (!priceString) return 0;
-    const price = priceString
-      .toString()
-      .replace(/Rs\.|₹|,/g, '')
-      .replace(/\s+/g, '')
-      .trim();
-    return parseFloat(price) || 0;
+  const fetchCart = async () => {
+    return dispatch(fetchCartThunk());
   };
 
   const addToCart = async (productId, size) => {
-    try {
-      await api.post(`/cart/add/${productId}`, {size});
-      await fetchCart()
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-
-  const increaseQuantity = async (productId, size) => {
-    try{
-    await api.patch(`/cart/increase/${productId}`, {size})
-    await fetchCart()
-    }catch(err){
-      console.log(err)
-    }
-  }
-
-
-  const decreaseQuantity = async (productId, size) => {
-    try{
-    await api.patch(`/cart/decrease/${productId}`, {size})
-    await fetchCart()
-    }catch(err){
-      console.log(err)
-    }
-  }
-
-
-  const removeFromCart = async (productId, size) => {
-    try {
-      await api.delete(`/cart/remove/${productId}`, {data: {size}});
-      await fetchCart()
-    } catch (err) {
-      console.log(err)
-    }
+    return dispatch(addToCartThunk({ productId, size }));
   };
 
+  const increaseQuantity = async (productId, size) => {
+    return dispatch(increaseQuantityThunk({ productId, size }));
+  };
+
+  const decreaseQuantity = async (productId, size) => {
+    return dispatch(decreaseQuantityThunk({ productId, size }));
+  };
+
+  const removeFromCart = async (productId, size) => {
+    return dispatch(removeFromCartThunk({ productId, size }));
+  };
 
   const clearCart = async () => {
-    try{
-      await api.delete("/cart/clear");
-      setCart([])
-    }catch(err){
-      console.log(err)
-    }
-  }
-
+    return dispatch(clearCartThunk());
+  };
 
   const getCartTotal = () => {
-    return cart.reduce((total, item) => {
-      const price = parsePrice(item.productId.price);
+    return (cart || []).reduce((total, item) => {
+      const price = parsePrice(item.productId?.price || item.price);
       return total + price * item.quantity;
     }, 0);
   };
@@ -102,40 +63,44 @@ export const CartProvider = ({ children }) => {
   };
 
   const getItemTotal = (item) => {
-    const price = parsePrice(item.productId.price);
+    const price = parsePrice(item.productId?.price || item.price);
     return price * item.quantity;
   };
 
   const getCartItemCount = () => {
-    return cart.reduce((total, item) => total + item.quantity, 0);
+    return (cart || []).reduce((total, item) => total + item.quantity, 0);
   };
 
   const isInCart = (productId, size) => {
-    return cart.some(item => item.productId._id === productId && item.size === size);
+    return (cart || []).some(item => {
+      const itemId = item.productId?._id || item.productId?.id || item.productId;
+      const matchId = itemId?.toString() === productId?.toString();
+      if (!size) return matchId;
+      return matchId && item.size === size;
+    });
   };
 
+  const value = {
+    cart,
+    fetchCart,
+    addToCart,
+    removeFromCart,
+    getCartTotal,
+    getSubTotal,
+    getItemTotal,
+    getCartItemCount,
+    isInCart,
+    parsePrice,
+    increaseQuantity,
+    decreaseQuantity,
+    clearCart
+  };
 
-const value = {
-  cart,
-  fetchCart,
-  addToCart,
-  removeFromCart,
-  getCartTotal,
-  getSubTotal,
-  getItemTotal,
-  getCartItemCount,
-  isInCart,
-  parsePrice,
-  increaseQuantity,
-  decreaseQuantity,
-  clearCart
-};
-
-return (
-  <CartContext.Provider value={value}>
-    {children}
-  </CartContext.Provider>
-);
+  return (
+    <CartContext.Provider value={value}>
+      {children}
+    </CartContext.Provider>
+  );
 };
 
 export const useCart = () => {

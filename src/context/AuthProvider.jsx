@@ -1,99 +1,81 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import api from '../api/Axios';
+import React, { createContext, useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  checkAuthStatus as checkAuthStatusThunk,
+  loginUser as loginUserThunk,
+  registerUser as registerUserThunk,
+  logoutUser as logoutUserThunk,
+  setUser as setUserAction,
+  setIsAuthenticated as setIsAuthenticatedAction,
+  setError as setErrorAction,
+  clearError as clearErrorAction,
+  updateUser as updateUserAction,
+  setLoading as setLoadingAction,
+} from '../store/slices/authSlice';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const { user, isAuthenticated, loading, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const publicPaths = ["/login", "/register", "/verify-otp", "/resend-otp"];
     if (publicPaths.includes(window.location.pathname)) {
-      setLoading(false); 
+      dispatch(setLoadingAction(false));
       return;
     }
-    checkAuthStatus();
-  }, []);
-
-//   useEffect(() => {
-//   checkAuthStatus();
-// }, []);
+    dispatch(checkAuthStatusThunk());
+  }, [dispatch]);
 
   const checkAuthStatus = async () => {
-    try {
-      const res = await api.get("/users/getUser");
-      
-      setUser(res.data.user);
-      setIsAuthenticated(true);
-    } catch (error) {
-      setUser(null);
-      setIsAuthenticated(false);
-    } finally {
-      setLoading(false);
-    }
+    return dispatch(checkAuthStatusThunk());
   };
- 
 
-  const clearError = () => setError('');
+  const clearError = () => dispatch(clearErrorAction());
+
+  const setError = (msg) => dispatch(setErrorAction(msg));
+
+  const setUser = (userData) => dispatch(setUserAction(userData));
+
+  const setIsAuthenticated = (status) => dispatch(setIsAuthenticatedAction(status));
 
   const login = async (email, password) => {
-    setLoading(true);
-    setError('');
-
     try {
-      const res = await api.post("/users/login", { email, password });
-      const userData = res.data.user;
-      await checkAuthStatus();
+      const resultAction = await dispatch(loginUserThunk({ email, password })).unwrap();
       return {
         success: true,
-        user: userData,
-        isAdmin: userData.role === "admin"
+        user: resultAction.user,
+        isAdmin: resultAction.isAdmin
       };
     } catch (err) {
-      const message = err.response?.data?.message || "Login failed";
-
-      
-      if (err.response?.status === 403) {
-        setError("Your account has been blocked by admin");
+      if (err?.status === 403) {
+        dispatch(setErrorAction("Your account has been blocked by admin"));
         return { success: false };
       }
-
-      setError(message);
       return { success: false };
-    } finally {
-      setLoading(false);
     }
   };
 
   const register = async (userData) => {
-    setLoading(true);
-    setError("");
     try {
-      const res = await api.post("/users/register", userData);
-      return { success: true, message: res.data.message };
-    } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
-      return { success: false, message: err.response?.data?.message };
-    } finally {
-      setLoading(false);
+      const message = await dispatch(registerUserThunk(userData)).unwrap();
+      return { success: true, message };
+    } catch (errMessage) {
+      return { success: false, message: errMessage };
     }
   };
 
   const logout = async () => {
     try {
-      await api.post("/users/logout");
-      setUser(null);
-      setIsAuthenticated(false);
+      await dispatch(logoutUserThunk());
     } catch (err) {
       console.log(err);
     }
   };
 
   const updateUser = (updatedUserData) => {
-    setUser(prev => ({ ...prev, ...updatedUserData }));
+    dispatch(updateUserAction(updatedUserData));
   };
 
   const value = {
